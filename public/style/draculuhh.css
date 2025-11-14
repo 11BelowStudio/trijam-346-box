@@ -73,7 +73,7 @@ Much nicer than that "official" dracula colour scheme
     font-size: calc(1em - 1px);
 }
 
-
+/*
 body{
     background-color: var(--background, #101010);
     color: var(--foreground, #fafaf2);
@@ -114,23 +114,23 @@ strong{
     color: var(--cyan, #80ffff);
 }
 
-/* unvisited link */
+/* unvisited link * /
 a:link {
     color: var(--pink, #ff80c0);
 }
 
-/* visited link */
+/* visited link * /
 a:visited {
     color: var(--purple, #d080ff);
 }
 
-/* mouse over link */
+/* mouse over link * /
 a:hover {
     color: var(--green, #80ff80);
 }
 
-/* selected link */
+/* selected link * /
 a:active {
     color: var(--cyan, #80ffff);
 }
-
+/* */
