@@ -1,0 +1,263 @@
+
+body{
+  background-color: var(--background, #101010);
+  color: var(--foreground, #fafaf2);
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+h1{
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  font-weight: 900;
+  color: var(--pink, #ff80c0);
+}
+
+h2{
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  font-weight: 800;
+  color: var(--purple, #d080ff);
+}
+
+h3{
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  font-weight: 700;
+  color: var(--cyan, #80ffff);
+}
+
+h4{
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  font-weight: 600;
+  color: var(--orange, #ffa040);
+}
+
+h5 {
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  color: var(--red, #ff4040);
+}
+
+h6{
+  font-family: 'Hanken Grotesk', Arial, sans-serif;
+  color: var(--yellow, #ffff80);
+}
+
+
+
+em{
+  color: var(--orange, #ffa040);
+}
+
+strong{
+  color: var(--cyan, #80ffff);
+}
+
+/* unvisited link */
+a:link {
+  color: var(--pink, #ff80c0);
+}
+
+/* visited link */
+a:visited {
+  color: var(--purple, #d080ff);
+}
+
+/* mouse over link */
+a:hover {
+  color: var(--green, #80ff80);
+}
+
+/* selected link */
+a:active {
+  color: var(--cyan, #80ffff);
+}
+
+body{
+  margin-left: 0;
+}
+
+.buttonparent {
+  display: inline-block;
+}
+
+.buttonparent > a {
+  display: inline-block;
+  vertical-align:middle;
+  width: 88px;
+  height: 31px;
+  box-shadow: 0 0 5px 5px #404040;
+  margin: 2.5px 2.5px;
+}
+
+.buttonparent > a > img {
+  display: inline-block;
+  vertical-align:middle;
+  width: 88px;
+  height: 31px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.buttonparent > img {
+  display: inline-block;
+  vertical-align:middle;
+  width: 88px;
+  height: 31px;
+  box-shadow: 0 0 5px 5px #404040;
+  margin: 2.5px 2.5px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+.button {
+  display: inline-block;
+  width: 88px;
+  height: 31px;
+  box-shadow: 0 0 5px 5px #404040;
+  margin: 2.5px 2.5px;
+}
+div.button{
+  display: inline-block;
+  width: 88px;
+  height: 31px;
+}
+
+.button img{
+  display: inline-block;
+  width: 88px;
+  height: 31px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+img.button{
+  display: inline-block;
+  width: 88px;
+  height: 31px;
+}
+
+s {
+  text-decoration: line-through var(--red, #ff4040) solid 0.125em;
+}
+
+del {
+  text-decoration: line-through var(--red, #ff4040) solid 0.125em;
+}
+
+ins{
+  text-decoration: underline var(--green, #80ff80) solid auto;
+  font-style: italic;
+}
+
+div.wrap {
+  display: flex;
+  flex-direction: row;
+}
+
+div.sidebar, aside.sidebar {
+
+  columns: 100% 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  background-color: var(--currentLine, #181818);
+  margin: 4px;
+  padding: 0px;
+  width: 280px;
+  max-width: 280px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x : hidden;
+}
+
+aside.sidebarItem, nav.sidebarItem, div.sidebarItem{
+
+  /*columns: 100% 1;*/
+  background-color: #202020;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  margin: 1.25% 2.5%;
+  padding: 0px;
+  width: 95%;
+  box-sizing: border-box;
+}
+
+
+article.content, div.content {
+  margin-left: 290px;
+  padding: 1px 8px;
+  height: auto;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x : hidden;
+}
+
+@media screen and (max-width: 700px) {
+
+  body{
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  div.wrap{
+    flex-direction: column;
+  }
+
+  div.sidebar, aside.sidebar {
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: center;
+    width: auto;
+    height: auto;
+    top: auto;
+    bottom: auto;
+    min-height: 0;
+    max-height: none;
+    max-width: none;
+    position: relative;
+    order: 2;
+  }
+  div.content, article.content {
+    margin-left: 0;
+    padding: 4px 4px;
+    order: 1;
+    width: 95%;
+    overflow-y: auto;
+    overflow-x : hidden;
+  }
+
+  .mobilefillh{
+    /*
+    Class that gets this thing to fill its horizontal space on mobile.
+    */
+
+    width: 100%;
+    height: auto;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+  }
+}
+
+.mid{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.hflip{
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+

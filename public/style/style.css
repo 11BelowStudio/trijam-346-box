@@ -3,7 +3,7 @@
    "how to change link color." */
 
 @import "./draculuhh.css";
-@import "./fonts/HankenGrotesk/HankenGrotesk.css";
+@import "../fonts/HankenGrotesk/HankenGrotesk.css";
 
 body{
     background-color: var(--background, #101010);
