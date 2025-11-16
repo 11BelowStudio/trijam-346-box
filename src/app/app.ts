@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import {Asset_db} from '../game_backend/config/asset_db';
+import {Sfx} from '../game_backend/config/sfx';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +19,14 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     // Component initialization logic goes here
-    //Asset_db.sfx_game_over();
+    //Sfx.sfx_game_over();
   }
   /*
   constructor() {
     const elementRef = inject(ElementRef);
     afterNextRender({
       read: (didWrite) => {
-        Asset_db.sfx_game_over();
+        Sfx.sfx_game_over();
       }
 
     });

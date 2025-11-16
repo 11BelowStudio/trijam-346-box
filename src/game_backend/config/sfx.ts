@@ -4,7 +4,7 @@ import {Howl, Howler} from 'howler';
 
 import {sprintf} from 'sprintf-js';
 
-const Asset_db = {
+const Sfx = {
 
 
 
@@ -86,7 +86,7 @@ const _sfx_thank_you_for_playing: Howl = new Howl({
         }, id1);
       }
     } else {
-      const [h2, id2] = Asset_db.sfx_money();
+      const [h2, id2] = Sfx.sfx_money();
       if (Math.random() >= 0.5){
         h2.once('end', () => {
           sfx_come_again.play();
@@ -138,7 +138,7 @@ const sfx_thank_you_for_buying: Howl = new Howl({
         }, id1);
       }
     } else {
-      const [h2, id2] = Asset_db.sfx_money();
+      const [h2, id2] = Sfx.sfx_money();
       if (Math.random() >= 0.5){
         h2.once('end', () => {
           sfx_come_again.play();
@@ -154,5 +154,5 @@ const sfx_purchase_arr: readonly Howl[] = sfx_buy_arr
   .concat([sfx_thank_you_for_buying, sfx_good_luck]);
 
 export {
-  Asset_db
+  Sfx
 }
