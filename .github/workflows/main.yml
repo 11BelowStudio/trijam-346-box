@@ -18,7 +18,8 @@ jobs:
         run: |
           cd src
           npm install
-          npm run build
+          ng build
+          ng serve
           cd dist
           npm link
           cd ..
