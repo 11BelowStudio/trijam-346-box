@@ -1,0 +1,11 @@
+<tr>
+  <td>
+    <img src="{{item.icon_url}}" style="fill:{{colour}};"/>
+  </td>
+  <td>{{name}}</td>
+  <td>{{money_symbol_redundant}} {{price}}</td>
+  <td>{{quantity}}</td>
+  <td>{{money_symbol_redundant}} {{total_value}}</td>
+  <td><button matButton="tonal" (input)="sell(1)">Sell 1</button></td>
+  <td><button matButton="filled" (input)="sell()">Sell All</button></td>
+</tr>

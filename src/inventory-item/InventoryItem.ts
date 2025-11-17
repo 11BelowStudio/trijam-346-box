@@ -1,11 +1,23 @@
 import Rand from 'rand-seed';
 
-import {Item, items_dict, items_arr} from './items';
-import {Rarity, rarities_dict, rarities_arr} from './rarities';
-import {random_power} from './utils';
-import {I_InventoryItemGameView} from './interfaces/I_InventoryItemGameView';
-import {I_ItemRarity} from './interfaces/I_ItemRarity';
+import {Item, items_dict, items_arr} from '../game_backend/items';
+import {Rarity, rarities_dict, rarities_arr} from '../game_backend/rarities';
+import {money_symbol, random_power} from '../game_backend/utils';
+import {I_InventoryItemGameView} from '../game_backend/interfaces/I_InventoryItemGameView';
+import {I_ItemRarity} from '../game_backend/interfaces/I_ItemRarity';
 
+import { Component } from '@angular/core';
+import {MatButton, MatIconButton} from '@angular/material/button';
+
+@Component({
+  selector: 'app-inventory-item',
+  imports: [
+    MatIconButton,
+    MatButton
+  ],
+  templateUrl: './inventory-item.html',
+  styleUrl: './inventory-item.scss',
+})
 export class InventoryItem implements I_ItemRarity {
   public get item(): Item {
     return this._item;
@@ -62,15 +74,18 @@ export class InventoryItem implements I_ItemRarity {
 
   /**
    * sell a given amount of this item, then notify the game about the sale
-   * @param sell_quantity
+   * @param sell_quantity the quantity of this item to sell (negative numbers = sell all)
    * @returns the total value of the sale (game is notified automagically)
    */
-  public sell(sell_quantity: number = 1): number {
+  public sell(sell_quantity: number = -1): number {
     sell_quantity = Math.floor(sell_quantity);
-    if (sell_quantity <= 0){
+    if (sell_quantity < 0){
+      sell_quantity = this._quantity;
+    }
+    if (sell_quantity == 0){
       return 0;
     }
-    if (sell_quantity > this._quantity){
+    else if (sell_quantity > this._quantity){
       sell_quantity = this._quantity;
     }
     this._quantity -= sell_quantity;
@@ -116,6 +131,10 @@ export class InventoryItem implements I_ItemRarity {
     this._quantity = 0;
     this._price = this._item.val_multiplier * this._rarity.val_multiplier;
     this.fluctuate();
+  }
+
+  public get money_symbol_redundant(): string {
+    return money_symbol;
   }
 
 }

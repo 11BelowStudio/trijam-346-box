@@ -1,4 +1,4 @@
-import {InventoryItem} from '../InventoryItem';
+import {InventoryItem} from '../../inventory-item/InventoryItem';
 
 /**
  * Interface exposing the game's inventory

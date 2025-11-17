@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Rand from 'rand-seed';
 import {Item, items_arr, items_dict, random_item} from './items';
 import {Rarity, rarities_arr, rarities_dict, random_rarity} from './rarities';
-import {InventoryItem} from './InventoryItem';
+import {InventoryItem} from '../inventory-item/InventoryItem';
 import {Sfx} from './sfx';
 import {I_InventoryItemGameView} from './interfaces/I_InventoryItemGameView';
 import {I_HaveRng} from './interfaces/I_HaveRng';
@@ -16,9 +16,9 @@ import {I_HaveInventory} from './interfaces/I_HaveInventory';
 
 @Injectable({
   providedIn: 'root',
-  useValue: new TheGame(),
+  useValue: new Game(),
 })
-export class TheGame implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndBoxes, I_GoGambling, I_HaveInventory {
+export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndBoxes, I_GoGambling, I_HaveInventory {
 
   private readonly _initial_box_price: number = 50;
 
