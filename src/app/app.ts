@@ -17,7 +17,7 @@ import {Game} from '../game/game';
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
-  protected readonly title = signal('trijam-346-box');
+  protected readonly title = signal('Box Opening Roguelike 2025');
 
   ngOnInit(): void {
     // Component initialization logic goes here
