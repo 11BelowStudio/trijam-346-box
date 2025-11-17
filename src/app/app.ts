@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import {Sfx} from '../game_backend/config/sfx';
+import {Sfx} from '../game_backend/sfx';
 
 @Component({
   selector: 'app-root',

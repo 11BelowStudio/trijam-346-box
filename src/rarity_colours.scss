@@ -1,0 +1,30 @@
+@use "sass:string";
+
+// Map of the colours of each rarity
+$rarity_colours: (
+  "boring": #fafaf2,
+  "common": #6090C0,
+  "mediocre": #70c0e0,
+  "alright": #80ffff,
+  "nice": #80ff80,
+  "decent": #ffff80,
+  "cool": #ffa040,
+  "rare": #ff4040,
+  "amazing": #d080ff,
+  "woagh": #ff80c0,
+  "disappointing": #804000,
+);
+
+// Function to retrieve a value from the map
+@function getRarityColour($name) {
+  @return map-get($rarity_colours, $name);
+}
+
+// Export colors using the :export directive
+// as object {BORING: '#fafaf2', COMMON: '#6090C0' ...}
+:export {
+  @each $rarity, $col in $rarity_colours {
+    #{string.to-lower-case(string.unquote($rarity))}: $col;
+  }
+}
+

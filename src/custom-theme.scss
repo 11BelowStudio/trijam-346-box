@@ -5,6 +5,7 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use './rarity_colours' as rarity;
 
 html {
   @include mat.theme((
@@ -39,3 +40,31 @@ body {
   margin: 0;
 }
 
+
+
+:root {
+  --boring: rarity.getRarityColour("boring");
+  --common: rarity.getRarityColour("common");
+  --mediocre: rarity.getRarityColour("mediocre");
+  --alright: rarity.getRarityColour("alright");
+  --nice: rarity.getRarityColour("nice");
+  --decent: rarity.getRarityColour("decent");
+  --cool: rarity.getRarityColour("cool");
+  --rare: rarity.getRarityColour("rare");
+  --amazing: rarity.getRarityColour("amazing");
+  --woagh: rarity.getRarityColour("woagh");
+}
+
+.rarity_element {
+  text-shadow: 0 0 5px #101010;
+}
+.boring { color: var(--boring); fill: var(--boring); }
+.common { color: var(--common); fill: var(--common); }
+.mediocre { color: var(--mediocre); fill: var(--mediocre); }
+.alright { color: var(--alright); fill: var(--alright); }
+.nice { color: var(--nice); fill: var(--nice); }
+.decent { color: var(--decent); fill: var(--decent); }
+.cool { color: var(--cool); fill: var(--cool); }
+.rare { color: var(--rare); fill: var(--rare); }
+.amazing { color: var(--amazing); fill: var(--amazing); }
+.woagh { color: var(--woagh); fill: var(--woagh); }

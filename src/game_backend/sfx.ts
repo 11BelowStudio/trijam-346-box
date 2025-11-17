@@ -7,42 +7,65 @@ import {sprintf} from 'sprintf-js';
 const Sfx = {
 
 
-
+  /**
+   * 'money' noise
+   */
   sfx_money: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_money_arr);
     return [snd, snd.play()]
   },
 
+  /**
+   * 'game over' noise
+   */
   sfx_game_over: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_gameover_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * noise somewhat related to items?
+   */
   sfx_item: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_item_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * LETS GO GAMBLING!!!!!
+   */
   sfx_gamba: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_gamba_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * 'no' noise
+   */
   sfx_no: function(): [Howl, number]{
     const snd: Howl = _random_itm(sfx_no_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * noise for selling stuff
+   */
   sfx_sell: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_sell_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * 'yes' noise
+   */
   sfx_yes: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_yes_arr);
     return [snd, snd.play()];
   },
 
+  /**
+   * noise for buying boxes
+   */
   sfx_buy: function(): [Howl, number] {
     const snd: Howl = _random_itm(sfx_purchase_arr);
     return [snd, snd.play()];
