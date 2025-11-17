@@ -2,6 +2,8 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 100 900;
+  font-variation-settings:
+    "wdth" 100;
   font-display: swap;
   src: local('Roboto'),
   url('./Roboto-VariableFont_wdth,wght.ttf') format('truetype');
@@ -11,6 +13,8 @@
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 100 900;
+  font-variation-settings:
+    "wdth" 100;
   font-display: swap;
   src: local('Roboto'),
   url('./Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
