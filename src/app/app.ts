@@ -4,12 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import {Sfx} from '../game_backend/sfx';
+import {Game} from '../game/game';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    Game
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

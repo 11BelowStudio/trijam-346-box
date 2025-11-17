@@ -1,23 +1,17 @@
 import Rand from 'rand-seed';
 
-import {Item, items_dict, items_arr} from '../game_backend/items';
-import {Rarity, rarities_dict, rarities_arr} from '../game_backend/rarities';
-import {money_symbol, random_power} from '../game_backend/utils';
-import {I_InventoryItemGameView} from '../game_backend/interfaces/I_InventoryItemGameView';
-import {I_ItemRarity} from '../game_backend/interfaces/I_ItemRarity';
+import {Item, items_dict, items_arr} from './items';
+import {Rarity, rarities_dict, rarities_arr} from './rarities';
+import {money_symbol, random_power} from './utils';
+import {I_InventoryItemGameView} from './interfaces/I_InventoryItemGameView';
+import {I_ItemRarity} from './interfaces/I_ItemRarity';
 
-import { Component } from '@angular/core';
+//import { Component } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
+import {Game} from '../game/game';
+import {signal, WritableSignal, Signal, computed} from '@angular/core';
 
-@Component({
-  selector: 'app-inventory-item',
-  imports: [
-    MatIconButton,
-    MatButton
-  ],
-  templateUrl: './inventory-item.html',
-  styleUrl: './inventory-item.scss',
-})
+
 export class InventoryItem implements I_ItemRarity {
   public get item(): Item {
     return this._item;
@@ -38,38 +32,41 @@ export class InventoryItem implements I_ItemRarity {
     return this._rarity.colour;
   }
 
-  public get quantity(): number{
+  public get quantity(): Signal<number>{
     return this._quantity;
   }
   public set quantity(value: number) {
     if (value < 0) {
       value = 0;
     }
-    this._quantity = Math.floor(value);
+    this._quantity.set(Math.floor(value));
   }
 
-  public get price(): number {
+  public get price(): Signal<number> {
     return this._price;
   }
 
-  public get total_value(): number {
-    return this._price * this._quantity;
-  }
+
+  public readonly total_value: Signal<number> = computed( () => this.price() * this.quantity());
 
   /**
    * increase or decrease the value of this item by a random factor
    */
   public fluctuate(): void {
-    this._price *= 1 + (random_power(3, this._game.rng) * (this._game.rng.next() < 0.5 ? -1 : 1));
-    this._price = Math.max(0.0005, this._price);
+    let price: number = this._price();
+    price *= 1 + (random_power(3, this._game.rng) * (this._game.rng.next() < 0.5 ? -1 : 1));
+    price = Math.max(0.0005, price);
+    this._price.set(price);
   }
 
   /**
    * depreciate the value of this item by a random factor
    */
   public depreciate (): void {
-    this._price *= 1 - random_power(2, this._game.rng);
-    this._price = Math.max(0.0005, this._price);
+    let price: number = this._price();
+    price *= 1 - random_power(2, this._game.rng);
+    price = Math.max(0.0005, price);
+    this._price.set(price);
   }
 
   /**
@@ -80,30 +77,30 @@ export class InventoryItem implements I_ItemRarity {
   public sell(sell_quantity: number = -1): number {
     sell_quantity = Math.floor(sell_quantity);
     if (sell_quantity < 0){
-      sell_quantity = this._quantity;
+      sell_quantity = this._quantity();
     }
     if (sell_quantity == 0){
       return 0;
     }
-    else if (sell_quantity > this._quantity){
-      sell_quantity = this._quantity;
+    else if (sell_quantity > this._quantity()){
+      sell_quantity = this._quantity();
     }
-    this._quantity -= sell_quantity;
-    const sell_amount = this._price * sell_quantity;
+    this._quantity.set(this._quantity() - sell_quantity);
+    const sell_amount = this._price() * sell_quantity;
     this.depreciate();
     this._game.items_sold(sell_quantity, sell_amount);
     return sell_amount;
   }
 
   public increment_quantity(): void {
-    this._quantity += 1;
+    this._quantity.set(this.quantity() + 1);
   }
 
   private readonly _item: Item;
   private readonly _rarity: Rarity;
-  private _quantity: number;
+  private _quantity: WritableSignal<number> = signal(0);
 
-  private _price: number;
+  private _price: WritableSignal<number> = signal(0);
 
   public get index(): number {
     return this._index;
@@ -113,13 +110,13 @@ export class InventoryItem implements I_ItemRarity {
   private readonly _game: I_InventoryItemGameView;
 
 
-  constructor(item: Item, rarity: Rarity, game: I_InventoryItemGameView) {
+  constructor(item: Item, rarity: Rarity, game: Game | I_InventoryItemGameView) {
     this._item = item;
     this._rarity = rarity;
     this._game = game;
-    this._quantity = 0;
+    this._quantity.set(0);
     this._index = InventoryItem.INDEX_FROM_COMPONENTS(item, rarity);
-    this._price = item.val_multiplier * rarity.val_multiplier;
+    this._price.set(item.val_multiplier * rarity.val_multiplier);
     this.fluctuate();
   }
 
@@ -128,8 +125,8 @@ export class InventoryItem implements I_ItemRarity {
   }
 
   public reset(){
-    this._quantity = 0;
-    this._price = this._item.val_multiplier * this._rarity.val_multiplier;
+    this._quantity.set(0);
+    this._price.set(this._item.val_multiplier * this._rarity.val_multiplier);
     this.fluctuate();
   }
 

@@ -1,4 +1,5 @@
-import {InventoryItem} from '../../inventory-item/InventoryItem';
+import {InventoryItem} from '../InventoryItem';
+import {Signal} from '@angular/core';
 
 /**
  * Interface exposing the game's inventory
@@ -13,11 +14,12 @@ export interface I_HaveInventory {
   /**
    * returns the number of items in the inventory.
    */
-  get inventory_item_count(): number;
+  get get_inventory_item_count(): number;
 
   /**
    * returns the total value of all items in the inventory.
    * this is used to determine the value of the inventory as a whole.
    */
   get inventory_item_value(): number;
+
 }

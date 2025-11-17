@@ -6,29 +6,7 @@
 @import "./custom-theme.scss";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Hanken Grotesk", Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.rarity-common {
-  color: #fafaf2;
-  text-shadow: 0px 0px 5px #101010;
-  fill: #fafaf2;
-}
-
-.rarity-meh {
-  color: #6090C0;
-  text-shadow: 0px 0px 5px #101010;
-  fill: #6090C0;
-}
-
-.rarity-alright {
-  color: #80ff80;
-  text-shadow: 0px 0px 5px #101010;
-  fill: #80ff80;
-}
-
-.rarity-nice {
-  color: #80ffff;
-  text-shadow: 0px 0px 5px #101010;
-  fill: #80ffff;
-}
+h1, h2, h3, h4, h5, h6, th { font-family: "Hanken Grotesk", Roboto, "Helvetica Neue", sans-serif; }
 

@@ -58,7 +58,7 @@ export interface I_HaveMoneyAndBoxes {
   /**
    * returns the number of items in the inventory.
    */
-  get inventory_item_count(): number;
+  get get_inventory_item_count(): number;
 
   /**
    * returns the total value of all items in the inventory.

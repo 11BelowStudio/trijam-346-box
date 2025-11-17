@@ -41,7 +41,11 @@ body {
 }
 
 
+.monospace {
+  font-family: "roboto mono", monospace;
+}
 
+/*
 :root {
   --boring: rarity.getRarityColour("boring");
   --common: rarity.getRarityColour("common");
@@ -53,18 +57,69 @@ body {
   --rare: rarity.getRarityColour("rare");
   --amazing: rarity.getRarityColour("amazing");
   --woagh: rarity.getRarityColour("woagh");
-}
+}*/
 
 .rarity_element {
   text-shadow: 0 0 5px #101010;
 }
-.boring { color: var(--boring); fill: var(--boring); }
-.common { color: var(--common); fill: var(--common); }
-.mediocre { color: var(--mediocre); fill: var(--mediocre); }
-.alright { color: var(--alright); fill: var(--alright); }
-.nice { color: var(--nice); fill: var(--nice); }
-.decent { color: var(--decent); fill: var(--decent); }
-.cool { color: var(--cool); fill: var(--cool); }
-.rare { color: var(--rare); fill: var(--rare); }
-.amazing { color: var(--amazing); fill: var(--amazing); }
-.woagh { color: var(--woagh); fill: var(--woagh); }
+.boring { color: rarity.getRarityColour("boring"); fill:  rarity.getRarityColour("boring"); }
+.common { color: rarity.getRarityColour("common"); fill: rarity.getRarityColour("common"); }
+
+.mediocre {
+  color: rarity.getRarityColour("mediocre");
+  fill: rarity.getRarityColour("mediocre");
+}
+
+.alright {
+  color: rarity.getRarityColour("alright");
+  fill: rarity.getRarityColour("alright");
+}
+
+.nice {
+  color: rarity.getRarityColour("nice");
+  fill: rarity.getRarityColour("nice");
+}
+
+.decent {
+  color: rarity.getRarityColour("decent");
+  fill: rarity.getRarityColour("decent");
+}
+
+.cool {
+  color: rarity.getRarityColour("cool");
+  fill: rarity.getRarityColour("cool");
+}
+
+.rare {
+  color: rarity.getRarityColour("rare");
+  fill: rarity.getRarityColour("rare");
+}
+
+.amazing {
+  color: rarity.getRarityColour("amazing");
+  fill: rarity.getRarityColour("amazing");
+}
+
+.woagh {
+  color: rarity.getRarityColour("woagh");
+  fill: rarity.getRarityColour("woagh");
+}
+
+.disappointing {
+  color: rarity.getRarityColour("disappointing");
+  fill: rarity.getRarityColour("disappointing");
+}
+
+img.boring { filter: rarity.getRarityFilter( "boring"); }
+img.common { filter: rarity.getRarityFilter( "common"); }
+img.mediocre { filter: rarity.getRarityFilter( "mediocre"); }
+img.alright {filter: rarity.getRarityFilter("alright");}
+img.nice {filter: rarity.getRarityFilter("nice");}
+img.decent {filter: rarity.getRarityFilter("decent");}
+img.cool {filter: rarity.getRarityFilter("cool");}
+img.rare {filter: rarity.getRarityFilter("rare");}
+img.amazing {filter: rarity.getRarityFilter("amazing");}
+img.woagh {filter: rarity.getRarityFilter("woagh");}
+img.disappointing { filter: rarity.getRarityFilter("disappointing");}
+
+

@@ -74,10 +74,10 @@ const mediocre = new Rarity("mediocre", "#70c0e0", 256, 2, 2);
 const alright = new Rarity("alright", "#80ffff", 205, 2.5, 3);
 const nice = new Rarity("nice", "#80ff80", 170, 3, 4);
 const decent = new Rarity("decent", "#ffff80", 128, 4, 5);
-const cool = new Rarity("cool", "#ffa040", 64, 8, 6);
-const rare = new Rarity("rare", "#ff4040", 32, 16, 7);
-const amazing = new Rarity("amazing", "#d080ff", 16, 32, 8);
-const woagh = new Rarity("woagh", "#ff80c0", 8, 64, 9);
+const cool = new Rarity("cool", "#ffa040", 64, 5, 6);
+const rare = new Rarity("rare", "#ff4040", 32, 6, 7);
+const amazing = new Rarity("amazing", "#d080ff", 16, 7, 8);
+const woagh = new Rarity("woagh", "#ff80c0", 8, 8, 9);
 const disappointing = new Rarity("disappointing", "#804000", 1, 0.1, 10);
 
 /**

@@ -60,23 +60,23 @@ class Item {
   }
 }
 
-const trash = new Item("trash", "/assets/trash.svg", 100, 0.001, 0);
-const can = new Item("leftovers", "/assets/opened-food-can.svg", 125, 0.01, 1);
-const spring = new Item("junk", "/assets/spring.svg", 250, 0.1, 2);
-const clown = new Item("clown", "/assets/clown.svg", 500, 1, 3);
-const flower = new Item("flower pot", "/assets/flower.svg", 1000, 5, 4);
-const duck = new Item("duck", "/assets/plastic-duck.svg", 1500, 10, 5);
-const scissors = new Item("scissors", "/assets/scissors.svg", 975, 11, 6);
-const beach_ball = new Item("beach ball", "/assets/beach_ball.svg", 950, 12.5, 7);
-const shirt = new Item("t-shirt", "/assets/t-shirt.svg", 925, 15, 8);
-const unicycle = new Item("unicycle", "/assets/unicycle.svg", 800, 20, 9);
-const book = new Item("book", "/assets/white-book.svg", 700, 30, 10);
-const skimmer_hat = new Item("skimmer hat", "/assets/skimmer-hat.svg", 600, 40, 11);
-const sunglasses = new Item("sunglasses", "/assets/sunglasses.svg", 500, 50, 12);
-const potion = new Item("potion-ball", "/assets/potion-ball.svg", 400, 60, 13);
-const card = new Item("card", "/assets/card-7-diamonds.svg", 300, 77, 14);
-const gladius = new Item("gladius", "/assets/gladius.svg", 200, 80, 15);
-const crown = new Item("crown", "/assets/crown.svg", 50, 100, 16);
+const trash = new Item("trash", "/img/sprites/trash-can.svg", 100, 0.001, 0);
+const can = new Item("leftovers", "/img/sprites/opened-food-can.svg", 125, 0.01, 1);
+const spring = new Item("junk", "/img/sprites/spring.svg", 250, 0.1, 2);
+const clown = new Item("clown", "/img/sprites/clown.svg", 500, 1, 3);
+const flower = new Item("flower pot", "/img/sprites/flower-pot.svg", 1000, 5, 4);
+const duck = new Item("duck", "/img/sprites/plastic-duck.svg", 1500, 10, 5);
+const scissors = new Item("scissors", "/img/sprites/scissors.svg", 975, 11, 6);
+const beach_ball = new Item("beach ball", "/img/sprites/beach-ball.svg", 950, 12.5, 7);
+const shirt = new Item("t-shirt", "/img/sprites/t-shirt.svg", 925, 15, 8);
+const unicycle = new Item("unicycle", "/img/sprites/unicycle.svg", 800, 20, 9);
+const book = new Item("book", "/img/sprites/white-book.svg", 700, 30, 10);
+const skimmer_hat = new Item("skimmer hat", "/img/sprites/skimmer-hat.svg", 600, 40, 11);
+const sunglasses = new Item("sunglasses", "/img/sprites/sunglasses.svg", 500, 50, 12);
+const potion = new Item("potion", "/img/sprites/potion-ball.svg", 400, 60, 13);
+const card = new Item("card", "/img/sprites/card-7-diamonds.svg", 300, 77, 14);
+const gladius = new Item("gladius", "/img/sprites/gladius.svg", 200, 80, 15);
+const crown = new Item("crown", "/img/sprites/queen-crown.svg", 50, 100, 16);
 
 /**
  * An array of all the items that can be obtained.

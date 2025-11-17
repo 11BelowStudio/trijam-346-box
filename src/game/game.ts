@@ -1,22 +1,81 @@
-import { Injectable } from '@angular/core';
+import {ChangeDetectorRef, Component, computed, inject, Signal, signal, WritableSignal} from '@angular/core';
 import Rand from 'rand-seed';
-import {Item, items_arr, items_dict, random_item} from './items';
-import {Rarity, rarities_arr, rarities_dict, random_rarity} from './rarities';
-import {InventoryItem} from '../inventory-item/InventoryItem';
-import {Sfx} from './sfx';
-import {I_InventoryItemGameView} from './interfaces/I_InventoryItemGameView';
-import {I_HaveRng} from './interfaces/I_HaveRng';
+import {Item, items_arr, items_dict, random_item} from '../game_backend/items';
+import {Rarity, rarities_arr, rarities_dict, random_rarity} from '../game_backend/rarities';
+import {InventoryItem} from '../game_backend/InventoryItem';
+import {Sfx} from '../game_backend/sfx';
+import {I_InventoryItemGameView} from '../game_backend/interfaces/I_InventoryItemGameView';
+import {I_HaveRng} from '../game_backend/interfaces/I_HaveRng';
 
-import {money_symbol, random_power, waitUntilTrue} from "./utils";
-import {I_ItemRarity} from './interfaces/I_ItemRarity';
-import {I_HaveMoneyAndBoxes} from './interfaces/I_HaveMoneyAndBoxes';
-import {I_GoGambling} from './interfaces/I_GoGambling';
-import {I_HaveInventory} from './interfaces/I_HaveInventory';
+import {money_symbol, random_power, waitUntilTrue} from "../game_backend/utils";
+import {I_ItemRarity} from '../game_backend/interfaces/I_ItemRarity';
+import {I_HaveMoneyAndBoxes} from '../game_backend/interfaces/I_HaveMoneyAndBoxes';
+import {I_GoGambling} from '../game_backend/interfaces/I_GoGambling';
+import {I_HaveInventory} from '../game_backend/interfaces/I_HaveInventory';
+import {MatButton} from '@angular/material/button';
+import {MatTable} from '@angular/material/table';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from '@angular/material/dialog';
 
 
-@Injectable({
-  providedIn: 'root',
-  useValue: new Game(),
+export interface GameOverDialogData {
+  money_symbol: string;
+  money: number;
+  box_price: number;
+  total_boxes_opened: number;
+  total_money_spent: number;
+  total_items_sold: number;
+  total_money_earned: number;
+  seed: string;
+}
+
+@Component({
+  selector: 'app-game-over-dialog',
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatButton],
+  template: `
+  <h1 mat-dialog-title>Game Over</h1>
+  <mat-dialog-content>
+    <p>You do not have enough money to continue your gambling streak.</p>
+
+    <p>You only have {{data.money_symbol}}{{data.money}} left to spend, but boxes cost {{data.money_symbol}}{{data.box_price}}.</p>
+
+    <p>Boxes opened: {{data.total_boxes_opened}}<br/>
+    Money spent: {{data.money_symbol}}{{data.total_money_spent}}<br/>
+    Total items sold: {{data.total_items_sold}}<br/>
+    Money earned: {{data.money_symbol}}{{data.total_money_earned}}</p>
+
+    <p>Seed: {{data.seed}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton (click)="okClick()">ok</button>
+  </mat-dialog-actions>
+  `
+})
+export class GameOverDialog {
+  readonly dialogRef = inject(MatDialogRef<GameOverDialog>);
+  readonly data: GameOverDialogData = inject(MAT_DIALOG_DATA);
+
+  okClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+
+
+
+@Component({
+  selector: 'app-game',
+  imports: [
+    MatButton
+  ],
+  templateUrl: './game.html',
+  styleUrl: './game.scss',
 })
 export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndBoxes, I_GoGambling, I_HaveInventory {
 
@@ -37,10 +96,16 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
    * the inventory of items the player has, sorted by index in ascending order.
    */
   public get inventory(): ReadonlyArray<InventoryItem>{
-    return this._inventory;
+    return this._inventory();
   }
 
-  private readonly _inventory: Array<InventoryItem>
+  public readonly sorted_inventory: Signal<Array<InventoryItem>> = computed(() =>
+    this._inventory()
+      .filter(itm => itm.quantity() > 0)
+      .sort((a, b) => b.total_value() - a.total_value())
+  );
+
+  private readonly _inventory: WritableSignal<Array<InventoryItem>> = signal([]);
 
 
   private _money: number = 0;
@@ -135,6 +200,9 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
    */
   public get max_purchasable_boxes(): number {
     let boxes = Math.floor(this._money / this._box_price);
+    while (this.box_cost(boxes + 10) <= this._money) {
+      boxes+=10;
+    }
     while (this.box_cost(boxes + 1) <= this._money) {
       boxes++;
     }
@@ -165,26 +233,36 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
 
 
   /**
-   * Create a new game instance with a given RNG seed.
-   * @param seed the seed to use for the RNG. If not specified, a random seed will be generated.
+   * Create a new game instance
    */
-  constructor(seed: string = crypto.randomUUID()) {
+  constructor(
+    private ref: ChangeDetectorRef
+  ) {
 
     this._seed = crypto.randomUUID();
 
-    this._rng = new Rand(seed);
+    this._rng = new Rand(this._seed);
 
-    this._inventory = [];
+    const inventory: Array<InventoryItem> = [];
     for (const rarity of rarities_arr) {
       for (const item of items_arr) {
-        this._inventory.push(new InventoryItem(item, rarity, this));
+        inventory.push(new InventoryItem(item, rarity, this));
       }
     }
     // inventory is sorted by index in ascending order.
-    this._inventory.sort((a, b) => a.index - b.index);
+    inventory.sort((a, b) => a.index - b.index);
+    this._inventory.set(inventory);
+    this._money = 0;
+    this._total_items_sold = 0;
+    this._total_boxes_opened = 0;
+    this._boxes_until_next_increment = this._boxes_between_increments;
+    this._total_money_spent = 0;
+    this._total_money_earned = 0;
+    this._boxes = this._initial_boxes;
+    this._box_price = this._initial_box_price;
+    this._gamba_in_progress = false;
 
-    this.reset(seed);
-
+    Sfx.sfx_gamba();
   }
 
   public reset(seed: string = crypto.randomUUID()): void {
@@ -192,11 +270,11 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
 
     this._rng = new Rand(seed);
 
-    for (const item of this._inventory) {
+    for (const item of this._inventory()) {
       item.reset();
     }
     // inventory is sorted by index in ascending order.
-    this._inventory.sort((a, b) => a.index - b.index);
+    this._inventory.set(this._inventory().sort((a, b) => a.index - b.index));
 
     this._money = 0;
     this._total_items_sold = 0;
@@ -208,6 +286,7 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
     this._box_price = this._initial_box_price;
     this._gamba_in_progress = false;
     Sfx.sfx_gamba();
+    this.ref.detectChanges();
   }
 
 
@@ -226,6 +305,8 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
     this._total_items_sold += quantity_sold;
     this._total_money_earned += money_earned;
     this.fluctuate_inventory();
+
+    this.ref.detectChanges();
 
     if (this.is_game_over()){
       this._game_over_happened();
@@ -255,14 +336,14 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
       Sfx.sfx_no();
       return [false, null];
     }
-    this._gamba_in_progress = true;
+    //this._gamba_in_progress = true;
     this._boxes -= 1;
     this._total_boxes_opened += 1;
     const [gamba_sfx, gamba_id] = Sfx.sfx_gamba();
     gamba_sfx.once('end', () => {this._gamba_in_progress = false}, gamba_id);
-    await waitUntilTrue(() => !this._gamba_in_progress);
 
-    const new_item = this._inventory[InventoryItem.INDEX_FROM_COMPONENTS(random_item(this.rng), random_rarity(this.rng))];
+
+    const new_item = this._inventory()[InventoryItem.INDEX_FROM_COMPONENTS(random_item(this.rng), random_rarity(this.rng))];
 
     new_item.increment_quantity();
 
@@ -275,8 +356,10 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
     if (this.rng.next() < 0.25){
       this.fluctuate_inventory();
     }
-
-    Sfx.sfx_item();
+    this.ref.detectChanges();
+    await waitUntilTrue(() => !this._gamba_in_progress);
+    //Sfx.sfx_item();
+    this.ref.detectChanges();
     return [true, new_item];
   }
 
@@ -316,9 +399,10 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
    * Called every time an item is sold, and 25% of the time when gambling.
    */
   public fluctuate_inventory(): void {
-    for (const item of this._inventory) {
+    for (const item of this._inventory()) {
       item.fluctuate();
     }
+    this.ref.detectChanges();
   }
 
   /**
@@ -328,7 +412,7 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
    * @returns true if the game is over, false otherwise.
    */
   public is_game_over(): boolean {
-    return (this.boxes <= 0 && this._money < this.box_price && this.inventory_item_count <= 0);
+    return (this.boxes <= 0 && this._money < this.box_price && this.inventory_item_count() <= 0);
   }
 
   /**
@@ -342,31 +426,55 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
   /**
    * returns the number of items in the inventory.
    */
-  public get inventory_item_count(): number {
-    return this._inventory.reduce((acc, item) => acc + item.quantity, 0);
+  public get get_inventory_item_count(): number {
+    return this.inventory_item_count();
   }
+
+  /**
+   * returns the number of items in the inventory.
+   */
+  public readonly inventory_item_count: Signal<number> = computed(
+    () => this._inventory().reduce((acc, item) => acc + item.quantity(), 0)
+  );
 
   /**
    * returns the total value of all items in the inventory.
    * this is used to determine the value of the inventory as a whole.
    */
   public get inventory_item_value(): number {
-    return this._inventory.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return this._inventory().reduce((acc, item) => acc + item.total_value(), 0);
   }
 
   /**
    * returns the average value of all items in the inventory.
    */
   public get inventory_item_value_per_item(): number {
-    return this.inventory_item_value / this.inventory_item_count;
+    return this.inventory_item_value / this.inventory_item_count();
   }
 
+
+  readonly dialog = inject(MatDialog);
 
   /**
    * shows the game over message
    */
   private _game_over_happened(): void {
     Sfx.sfx_game_over();
+
+    const dialogRef = this.dialog.open(GameOverDialog, {
+      data: {
+        money_symbol: money_symbol,
+        money: this.money,
+        box_price: this.box_price,
+        total_boxes_opened: this.total_boxes_opened,
+        total_money_spent: this.total_money_spent,
+        total_items_sold: this.total_items_sold,
+        total_money_earned: this.total_money_earned,
+        seed: this._seed
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => this.reset());
+    /*
     window.confirm(`GAME OVER!
 
     You do not have enough money to continue your gambling streak.
@@ -378,9 +486,11 @@ export class Game implements I_HaveRng, I_InventoryItemGameView, I_HaveMoneyAndB
     Total items sold: ${this.total_items_sold}
     Money earned: ${money_symbol}${this.total_money_earned}
 
-    Seed: ${this._seed}`);
+    Seed: ${this._seed}`);*/
+
   }
 
+  protected readonly money_symbol = money_symbol;
 }
 
 
