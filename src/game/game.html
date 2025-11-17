@@ -1,0 +1,106 @@
+<h1>Box Opening Roguelike 2025</h1>
+<p>Made by 11BelowStudio over a few hours for Trijam 346 (<i>What's In The Box?</i>)</p>
+
+<div class="responsive-two-columns">
+  <div>
+
+    <div class="box-zone">
+      <h2>Unboxing Zone</h2>
+      @if (boxes > 0){
+        <img class="item-icon disappointing" src="/img/sprites/wooden-crate.svg" alt="box"/>
+        <button matButton="filled" (click)="lets_go_gambling()">Open the box!</button>
+      } @else {
+        <p>You have no boxes to open.<br/>Please buy some more boxes.</p>
+      }
+    </div>
+    <div class="buy-zone">
+      <h2>Purchasing Zone</h2>
+      @if (money < box_price){
+        <p>You are too poor to buy boxes!<br/>You need {{money_symbol}}{{box_price - money}} more to buy a box.</p>
+      }
+      @else {
+        <button matButton="outlined" (click)="buy_boxes(1)">Buy a box ({{money_symbol}}{{box_price}})</button>
+        @if (max_purchasable_boxes > 1){
+          <button matButton="filled" (click)="buy_boxes()">Buy {{max_purchasable_boxes}} boxes ({{money_symbol}}{{box_cost(max_purchasable_boxes)}})</button>
+        }
+      }
+    </div>
+
+  </div>
+  <div>
+    <h2>Stats</h2>
+    <table class="monospace" style="text-align: left;">
+      <tr>
+        <th>Money</th>
+        <td  colspan="3">{{money_symbol}}{{money}}</td>
+      </tr>
+      <tr>
+        <th>Boxes</th>
+        <td colspan="3">{{boxes}}</td>
+      </tr>
+      <tr>
+        <th>Items sold</th>
+        <td colspan="3">{{total_items_sold}}</td>
+      </tr>
+      <tr>
+        <th>Boxes opened</th>
+        <td colspan="3">{{total_boxes_opened}}</td>
+      </tr>
+      <tr>
+        <th>Money earned</th>
+        <td colspan="3">{{money_symbol}}{{total_money_earned}}</td>
+      </tr>
+      <tr>
+        <th>Money spent</th>
+        <td colspan="3">{{money_symbol}}{{total_money_spent}}</td>
+      </tr>
+      <tr>
+        <th>Box base price</th>
+        <td colspan="3">{{money_symbol}}{{box_price}}</td>
+      </tr>
+      <tr>
+        <th>Price hike</th>
+        <td colspan="3">{{boxes_until_next_increment}} unboxings until the next price hike</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+
+
+<h2>Inventory</h2>
+
+@if (inventory_item_count() > 0){
+  <table id="inventory">
+    <thead>
+    <tr>
+      <th>Item</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total Value</th>
+      <th colspan="2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (item of sorted_inventory(); track item.index ){
+        @if (item.quantity() > 0){
+          <tr>
+            <td><div class="item-icon"><img class="item-icon {{item.rarity.name}}" src="{{item.icon_url}}" style="fill:{{item.colour}};"/></div></td>
+            <td><span class="rarity_element {{item.rarity.name}}">{{item.name}}</span></td>
+            <td class="monospace">{{money_symbol}}{{item.price()}}</td>
+            <td class="monospace">{{item.quantity()}}</td>
+            <td class="monospace">{{money_symbol}}{{item.total_value()}}</td>
+            <td><button matButton="tonal" (click)="item.sell(1)">Sell 1</button></td>
+            <td><button matButton="filled" (click)="item.sell()">Sell All</button></td>
+          </tr>
+
+        }
+      }
+    </tbody>
+  </table>
+}
+@else {
+  <p>You have nothing to sell.</p>
+}

@@ -1,0 +1,125 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+@use './rarity_colours' as rarity;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$cyan-palette,
+      tertiary: mat.$orange-palette,
+    ),
+
+    plain-family: Roboto,
+    brand-family: Hanken Grotesk,
+    bold-weight: 900,
+    medium-weight: 500,
+    regular-weight: 300,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light dark;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+}
+
+
+.monospace {
+  font-family: "roboto mono", monospace;
+}
+
+/*
+:root {
+  --boring: rarity.getRarityColour("boring");
+  --common: rarity.getRarityColour("common");
+  --mediocre: rarity.getRarityColour("mediocre");
+  --alright: rarity.getRarityColour("alright");
+  --nice: rarity.getRarityColour("nice");
+  --decent: rarity.getRarityColour("decent");
+  --cool: rarity.getRarityColour("cool");
+  --rare: rarity.getRarityColour("rare");
+  --amazing: rarity.getRarityColour("amazing");
+  --woagh: rarity.getRarityColour("woagh");
+}*/
+
+.rarity_element {
+  text-shadow: 0 0 5px #101010;
+}
+.boring { color: rarity.getRarityColour("boring"); fill:  rarity.getRarityColour("boring"); }
+.common { color: rarity.getRarityColour("common"); fill: rarity.getRarityColour("common"); }
+
+.mediocre {
+  color: rarity.getRarityColour("mediocre");
+  fill: rarity.getRarityColour("mediocre");
+}
+
+.alright {
+  color: rarity.getRarityColour("alright");
+  fill: rarity.getRarityColour("alright");
+}
+
+.nice {
+  color: rarity.getRarityColour("nice");
+  fill: rarity.getRarityColour("nice");
+}
+
+.decent {
+  color: rarity.getRarityColour("decent");
+  fill: rarity.getRarityColour("decent");
+}
+
+.cool {
+  color: rarity.getRarityColour("cool");
+  fill: rarity.getRarityColour("cool");
+}
+
+.rare {
+  color: rarity.getRarityColour("rare");
+  fill: rarity.getRarityColour("rare");
+}
+
+.amazing {
+  color: rarity.getRarityColour("amazing");
+  fill: rarity.getRarityColour("amazing");
+}
+
+.woagh {
+  color: rarity.getRarityColour("woagh");
+  fill: rarity.getRarityColour("woagh");
+}
+
+.disappointing {
+  color: rarity.getRarityColour("disappointing");
+  fill: rarity.getRarityColour("disappointing");
+}
+
+img.boring { filter: rarity.getRarityFilter( "boring"); }
+img.common { filter: rarity.getRarityFilter( "common"); }
+img.mediocre { filter: rarity.getRarityFilter( "mediocre"); }
+img.alright {filter: rarity.getRarityFilter("alright");}
+img.nice {filter: rarity.getRarityFilter("nice");}
+img.decent {filter: rarity.getRarityFilter("decent");}
+img.cool {filter: rarity.getRarityFilter("cool");}
+img.rare {filter: rarity.getRarityFilter("rare");}
+img.amazing {filter: rarity.getRarityFilter("amazing");}
+img.woagh {filter: rarity.getRarityFilter("woagh");}
+img.disappointing { filter: rarity.getRarityFilter("disappointing");}
+
+

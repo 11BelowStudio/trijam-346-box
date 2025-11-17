@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "../public/fonts/HankenGrotesk/HankenGrotesk.css";
+@import "../public/fonts/Roboto/Roboto.css";
+@import "../public/fonts/RobotoMono/RobotoMono.css";
+@import "../public/fonts/MaterialIcons/MaterialIcons.css";
+@import "../public/style/draculuhh.css";
+
+@import "./custom-theme.scss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h1, h2, h3, h4, h5, h6, th { font-family: "Hanken Grotesk", Roboto, "Helvetica Neue", sans-serif; }
+

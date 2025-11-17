@@ -1,0 +1,66 @@
+@use "sass:string";
+
+// Map of the colours of each rarity
+$rarity_colours: (
+  "boring": #fafaf2,
+  "common": #6090C0,
+  "mediocre": #70c0e0,
+  "alright": #80ffff,
+  "nice": #80ff80,
+  "decent": #ffff80,
+  "cool": #ffa040,
+  "rare": #ff4040,
+  "amazing": #d080ff,
+  "woagh": #ff80c0,
+  "disappointing": #804000,
+);
+
+// Function to retrieve a value from the map
+@function getRarityColour($name) {
+  @return map-get($rarity_colours, $name);
+}
+
+:root {
+  --boring: getRarityColour("boring");
+  --common: getRarityColour("common");
+  --mediocre: getRarityColour("mediocre");
+  --alright: getRarityColour("alright");
+  --nice: getRarityColour("nice");
+  --decent: getRarityColour("decent");
+  --cool: getRarityColour("cool");
+  --rare: getRarityColour("rare");
+  --amazing: getRarityColour("amazing");
+  --woagh: getRarityColour("woagh");
+}
+
+// Generated with https://codepen.io/sosuke/pen/Pjoqqp
+$rarity_filters: (
+  "boring": invert(0%) sepia(39%) saturate(386%) hue-rotate(335deg) brightness(106%) contrast(96%),
+  "common": invert(31%) sepia(7%) saturate(3430%) hue-rotate(178deg) brightness(79%) contrast(88%),
+  "mediocre": invert(21%) sepia(5%) saturate(4094%) hue-rotate(165deg) brightness(94%) contrast(86%),
+  "alright": invert(2%) sepia(11%) saturate(7378%) hue-rotate(156deg) brightness(104%) contrast(110%),
+  "nice": invert(23%) sepia(84%) saturate(314%) hue-rotate(59deg) brightness(104%) contrast(103%),
+  "decent": invert(7%) sepia(26%) saturate(835%) hue-rotate(350deg) brightness(108%) contrast(106%),
+  "cool": invert(30%) sepia(52%) saturate(1007%) hue-rotate(329deg) brightness(104%) contrast(101%),
+  "rare": invert(64%) sepia(94%) saturate(2256%) hue-rotate(338deg) brightness(102%) contrast(104%),
+  "amazing": invert(37%) sepia(21%) saturate(4035%) hue-rotate(223deg) brightness(97%) contrast(111%),
+  "woagh": invert(25%) sepia(49%) saturate(2113%) hue-rotate(289deg) brightness(100%) contrast(103%),
+  "disappointing": invert(76%) sepia(100%) saturate(776%) hue-rotate(3deg) brightness(93%) contrast(104%)
+);
+
+// Function to retrieve a value from the map
+@function getRarityFilter($name) {
+  @return map-get($rarity_filters, $name);
+}
+
+// Export colors using the :export directive
+// as object {BORING: '#fafaf2', COMMON: '#6090C0' ...}
+:export {
+  @each $rarity, $col in $rarity_colours {
+    #{string.to-lower-case(string.unquote($rarity))}: $col;
+  }
+  @each $rarity, $filter in $rarity_colours {
+    #{string.to-lower-case(string.unquote($rarity))}: $filter;
+  }
+}
+

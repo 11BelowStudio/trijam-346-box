@@ -1,0 +1,37 @@
+@use "../rarity_colours" as rarity;
+@use "../custom-theme" as ctheme;
+
+@import "../styles.css";
+
+div.item-icon{
+  aspect-ratio: 1;
+}
+img.item-icon{
+  aspect-ratio: 1;
+  max-height: 10vh;
+}
+
+
+/* container */
+.responsive-two-columns {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+/* columns */
+.responsive-two-columns > * {
+  width:100%;
+  padding:1rem;
+}
+
+/* tablet breakpoint */
+@media (min-width:768px) {
+  .responsive-two-columns > * {
+    width:40%;
+  }
+}
+
+.statbox{
+  background-color: var(--mat-sys-surface-container-lowest);
+  font-family: var(--mat-font)
+}
