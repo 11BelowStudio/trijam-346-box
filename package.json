@@ -43,7 +43,6 @@
     "@types/howler": "^2.2.12",
     "@types/jasmine": "~5.1.0",
     "@types/sprintf-js": "^1.1.4",
-    "angular-cli-ghpages": "^2.0.3",
     "electron": "^39.2.1",
     "electron-builder": "^26.0.12",
     "jasmine-core": "~5.9.0",
