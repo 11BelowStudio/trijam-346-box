@@ -40,6 +40,10 @@ export class InventoryItem implements I_ItemRarity {
     return this._price;
   }
 
+  public get total_value(): number {
+    return this._price * this._quantity;
+  }
+
   /**
    * increase or decrease the value of this item by a random factor
    */
