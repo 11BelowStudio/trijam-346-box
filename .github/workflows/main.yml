@@ -16,9 +16,10 @@ jobs:
         with:
           node-version: 24
 
-      - name: Node to GH
-        # You may pin to the exact commit or the version.
-        # uses: FdelMazo/node-to-gh-action@7e9fea02899d91fa04cac0c4b5ae7e6e27ef18ec
-        uses: FdelMazo/node-to-gh-action@v2
+      - run: npm ci
+        shell: bash
+      - run: npm run build
+        shell: bash
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
